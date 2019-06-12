@@ -1,4 +1,4 @@
-import Event from '@electron/internal/renderer/extensions/event'
+import { Event } from '@electron/internal/renderer/extensions/event'
 const { ipcRendererInternal } = require('@electron/internal/renderer/ipc-renderer-internal')
 
 class WebNavigation {
@@ -16,6 +16,4 @@ class WebNavigation {
   }
 }
 
-exports.setup = () => {
-  return new WebNavigation()
-}
+exports.setup = () => new WebNavigation()
