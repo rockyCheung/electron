@@ -189,7 +189,7 @@ if (nodeIntegration) {
 }
 
 const errorUtils = require('@electron/internal/common/error-utils')
-const { isParentDir } = require('@electron/internal/common/path-utils')
+const { isPreloadAllowed } = require('@electron/internal/common/path-utils')
 
 let absoluteAppPath: string
 const getAppPath = function () {
@@ -202,7 +202,7 @@ const getAppPath = function () {
 // Load the preload scripts.
 for (const preloadScript of preloadScripts) {
   try {
-    if (!isParentDir(getAppPath(), fs.realpathSync(preloadScript))) {
+    if (!isPreloadAllowed(getAppPath(), Module._resolveFilename(preloadScript, null, true))) {
       throw new Error('Preload scripts outside of app path are not allowed')
     }
     Module._load(preloadScript)

@@ -103,6 +103,13 @@ function loadApplicationPackage (packagePath: string) {
         app.name = packageJson.name
       }
       app._setDefaultAppPaths(packagePath)
+    } else {
+      const stats = fs.statSync(packagePath)
+      if (stats.isDirectory()) {
+        app._setDefaultAppPaths(packagePath)
+      } else if (stats.isFile()) {
+        app._setDefaultAppPaths(path.dirname(packagePath))
+      }
     }
 
     try {
